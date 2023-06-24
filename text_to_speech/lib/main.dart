@@ -73,26 +73,73 @@ class _MyAppState extends State<MyApp> {
             )));
   }
 
-  Widget input() => Container(
-        alignment: Alignment.topCenter,
-        padding: const EdgeInsets.all(25.0),
-        child: TextField(
-          onChanged: (String value) {
-            setState(() {
-              _tts = value;
-            });
-          },
+  // input TTS text field
+  Widget input() {
+    return Container(
+      alignment: Alignment.topCenter,
+      padding: const EdgeInsets.all(25.0),
+      child: TextField(
+        onChanged: (String value) {
+          setState(() {
+            _tts = value;
+          });
+        },
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Capture The Page Text',
         ),
-      );
+        maxLines: null, // Allows for multiline input
+      ),
+    );
+  }
+
+  // Widget input() => Container(
+  //       alignment: Alignment.topCenter,
+  //       padding: const EdgeInsets.all(25.0),
+  //       child: TextField(
+  //         onChanged: (String value) {
+  //           setState(() {
+  //             _tts = value;
+  //           });
+  //         },
+  //       ),
+  //     );
+
+
+  // *******************************************************
 
   // play and stop button
+
   Widget button() {
-    if (_ttsState == TtsState.stopped) {
-      return TextButton(onPressed: speak, child: const Text('Play'));
-    } else {
-      return TextButton(onPressed: stop, child: const Text('Stop'));
-    }
-  }
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: 20.0),
+    child: ElevatedButton(
+      onPressed: _ttsState == TtsState.stopped ? speak : stop,
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: const BorderSide(color: Colors.black),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          _ttsState == TtsState.stopped ? 'Play' : 'Stop',
+          style: const TextStyle(fontSize: 18.0),
+        ),
+      ),
+    ),
+  );
+}
+
+
+  // Widget button() {
+  //   if (_ttsState == TtsState.stopped) {
+  //     return TextButton(onPressed: speak, child: const Text('Play'));
+  //   } else {
+  //     return TextButton(onPressed: stop, child: const Text('Stop'));
+  //   }
+  // }
 
   // speak function
   Future speak() async {
